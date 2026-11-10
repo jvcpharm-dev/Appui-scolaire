@@ -7,8 +7,8 @@
  * (données fictives, rien n'est enregistré).
  */
 window.APPUI_CONFIG = {
-  SUPABASE_URL: "",
-  SUPABASE_KEY: "",
+  SUPABASE_URL: "https://gopphkiledmgugjlfivc.supabase.co/rest/v1/",
+  SUPABASE_KEY: "sb_publishable_3wEesWxQfkNsSaOvaGvlNg_2Mni7Uga",
 
   // Les profils (ex. « aya.konan ») sont transformés en identifiants de connexion
   // de la forme aya.konan@<PROFIL_DOMAINE>. Aucun e-mail n'est jamais envoyé.
