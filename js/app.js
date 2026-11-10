@@ -168,7 +168,7 @@ function viewLogin() {
         <div class="row">${["admin", "aya.konan", "yao.kouadio"].map(p => `<button class="chip-btn" data-act="demo-fill" data-v="${p}">${p}</button>`).join("")}</div></div>`
       : setup ? `<button class="link-btn" data-act="hide-setup">← Retour à la connexion</button>`
       : `<p class="hint small">Mot de passe oublié ? Un administrateur peut vous en donner un nouveau.</p>
-         <button class="link-btn" data-act="show-setup">Première installation ? Créer le compte administrateur</button>`}
+                   ${S.setupErr ? `<button class="link-btn" data-act="show-setup">Première installation ? Créer le compte administrateur</button>` : ""}`}
     </div>
   </section>`;
 }
