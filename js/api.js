@@ -17,6 +17,8 @@ const PROFIL_RE = /^[a-z0-9._-]{3,30}$/;
 function humanError(e) {
   const m = String((e && (e.message || e.error_description || e.msg)) || e || "");
   if (/Invalid login credentials/i.test(m)) return "Profil ou mot de passe incorrect.";
+  if (/Could not find the function|schema cache|relation .* does not exist/i.test(m)) return "La base Supabase n'est pas installée ou pas à jour : relancez le fichier schema.sql dans le SQL Editor (étape 2 du guide).";
+  if (/Invalid API key|No API key|apikey|Invalid JWT|Unregistered API key/i.test(m)) return "Clé Supabase refusée : vérifiez SUPABASE_KEY dans js/config.js (étapes 4 et 5 du guide).";
   if (/already registered|already been registered|already exists/i.test(m)) return "Ce profil est déjà utilisé.";
   if (/Email not confirmed/i.test(m)) return "Compte non confirmé : dans Supabase, désactivez « Confirm email » (voir le guide d'installation).";
   if (/email.*invalid|invalid.*email/i.test(m)) return "Supabase refuse l'identifiant généré. Changez PROFIL_DOMAINE dans js/config.js (voir le guide).";

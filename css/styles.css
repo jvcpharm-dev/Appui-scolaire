@@ -143,6 +143,7 @@ form[data-form=cfg] .grid3 .field:first-child { grid-column: auto; }
 .btn[disabled] { opacity: .55; cursor: default; }
 .btn.loading { position: relative; color: transparent !important; }
 .btn.loading::after { content: ""; position: absolute; width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid var(--accent-ink); border-right-color: transparent; animation: spin .7s linear infinite; }
+.link-btn { justify-self: start; border: 0; background: none; padding: 4px 0; color: var(--accent); font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-align: left; }
 .chip-btn { border: 1px dashed var(--accent); background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 4px 12px; font-weight: 700; cursor: pointer; font-size: .85rem; }
 
 /* ---------- Puces d'état ---------- */

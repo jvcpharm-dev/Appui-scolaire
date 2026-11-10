@@ -161,11 +161,14 @@ function viewLogin() {
         <div class="field"><label for="l-profil">Profil</label><input type="text" id="l-profil" name="profil" autocomplete="username" autocapitalize="none" spellcheck="false" required placeholder="${setup ? "ex. admin" : "ex. aya.konan"}"></div>
         <div class="field"><label for="l-mdp">Mot de passe</label><input type="password" id="l-mdp" name="mdp" autocomplete="${setup ? "new-password" : "current-password"}" required ${setup ? 'minlength="6"' : ""}></div>
         ${S.loginErr ? `<div class="msg err" role="alert">${esc(S.loginErr)}</div>` : ""}
+        ${S.setupErr && !setup ? `<div class="msg err" role="alert"><b>Impossible de vérifier la base de données.</b> ${esc(S.setupErr)}</div>` : ""}
         <button class="btn primary big" type="submit" ${S.busy ? "disabled" : ""}>${S.busy ? "Patientez…" : setup ? "Créer mon compte administrateur" : "Se connecter"}</button>
       </form>
       ${demo ? `<div class="demo-accounts"><p><b>Comptes de démonstration</b> · mot de passe <code>demo123</code></p>
         <div class="row">${["admin", "aya.konan", "yao.kouadio"].map(p => `<button class="chip-btn" data-act="demo-fill" data-v="${p}">${p}</button>`).join("")}</div></div>`
-      : setup ? "" : `<p class="hint small">Mot de passe oublié ? Un administrateur peut vous en donner un nouveau.</p>`}
+      : setup ? `<button class="link-btn" data-act="hide-setup">← Retour à la connexion</button>`
+      : `<p class="hint small">Mot de passe oublié ? Un administrateur peut vous en donner un nouveau.</p>
+         <button class="link-btn" data-act="show-setup">Première installation ? Créer le compte administrateur</button>`}
     </div>
   </section>`;
 }
@@ -605,6 +608,8 @@ document.addEventListener("click", async e => {
   if (a === "refresh") { if (S.busy) return; S.busy = true; render(); await reload(); S.busy = false; render(); return toast("Données à jour."); }
   if (a === "retry") { S.busy = true; render(); await reload(); S.busy = false; return render(); }
   if (a === "logout") return logout();
+  if (a === "show-setup") { S.needsSetup = true; S.loginErr = ""; return render(); }
+  if (a === "hide-setup") { S.needsSetup = false; S.loginErr = ""; return render(); }
   if (a === "demo-fill") { $("#l-profil").value = v; $("#l-mdp").value = "demo123"; return; }
   if (a === "pick-me") { S.me = v; store.set("as_me", v); return render(); }
   if (a === "week") { const n = iso(addDays(parseISO(S.week), 7 * Number(v))); if (n <= curMonday()) S.week = n; return render(); }
@@ -682,7 +687,7 @@ const LOGO = `<svg viewBox="0 0 48 48" width="48" height="48" aria-hidden="true"
   if (!Api) { S.booting = false; return render(); }
   try {
     if (await Api.session()) { S.booting = false; S.busy = true; render(); await reload(); S.busy = false; }
-    else if (Api.mode === "supabase") S.needsSetup = await Api.needsSetup().catch(() => false);
+    else if (Api.mode === "supabase") S.needsSetup = await Api.needsSetup().catch(e => { S.setupErr = humanError(e); return false; });
   } catch (e) { S.loginErr = humanError(e); }
   S.booting = false; render();
 })();
