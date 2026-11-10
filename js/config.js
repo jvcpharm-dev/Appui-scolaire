@@ -7,7 +7,7 @@
  * (données fictives, rien n'est enregistré).
  */
 window.APPUI_CONFIG = {
-  SUPABASE_URL: "https://gopphkiledmgugjlfivc.supabase.co/rest/v1/",
+  SUPABASE_URL: "https://gopphkiledmgugjlfivc.supabase.co",
   SUPABASE_KEY: "sb_publishable_3wEesWxQfkNsSaOvaGvlNg_2Mni7Uga",
 
   // Les profils (ex. « aya.konan ») sont transformés en identifiants de connexion
