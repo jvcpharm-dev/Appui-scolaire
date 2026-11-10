@@ -4,7 +4,7 @@
  * mises en cache : elles viennent toujours du serveur.
  * Après une mise à jour des fichiers, augmentez VERSION.
  */
-const VERSION = "appui-v5";
+const VERSION = "appui-v7";
 const SHELL = [
   "./", "index.html", "css/styles.css",
   "js/config.js", "js/utils.js", "js/api.js", "js/charts.js", "js/pwa.js", "js/app.js",
